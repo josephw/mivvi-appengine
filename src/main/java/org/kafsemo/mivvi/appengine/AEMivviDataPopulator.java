@@ -53,7 +53,7 @@ public class AEMivviDataPopulator implements MivviDataPopulator
 {
     private final String publicMivviDataUrl = "http://mivvi.net/data/mivvi-data.zip";
     
-    public void populate(Repository sr) throws RepositoryException, ServletException, IOException
+    InputStream getInputStream() throws ServletException
     {
         DatastoreService dss = DatastoreServiceFactory.getDatastoreService();
         BlobstoreService bs = BlobstoreServiceFactory.getBlobstoreService();
@@ -64,11 +64,16 @@ public class AEMivviDataPopulator implements MivviDataPopulator
             throw new ServletException("No data uploaded.");
         }
 
+        return new BlobInputStream(bs, bk);
+    }
+    
+    public void populate(Repository sr) throws RepositoryException, ServletException, IOException
+    {
         RepositoryConnection mviRepCn = sr.getConnection();
         
         String base = publicMivviDataUrl;
         
-        InputStream in = new BlobInputStream(bs, bk);
+        InputStream in = getInputStream();
         
         ZipInputStream zis = new ZipInputStream(new BufferedInputStream(in, BlobstoreService.MAX_BLOB_FETCH_SIZE));
         ZipEntry ze;

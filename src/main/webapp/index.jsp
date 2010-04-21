@@ -1,6 +1,6 @@
 <%
 // String base = "<i>http://mivvi-server/</i>rest/";
-String base = "http://mivvi.appspot.com/";
+String base = "http://mivviweb.appspot.com/";
 %><!DOCTYPE html>
 <html>
 <title>Mivvi REST</title>

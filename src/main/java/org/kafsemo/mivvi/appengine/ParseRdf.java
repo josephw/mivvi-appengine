@@ -58,7 +58,8 @@ public class ParseRdf extends HttpServlet
             
             rep.initialize();
 
-            new AEMivviDataPopulator().populate(rep);
+//            new AEMivviDataPopulator().populate(rep);
+            new EmbeddedMivviDataPopulator().populate(rep);
 
             RepositoryConnection mviRepCn = rep.getConnection();
             

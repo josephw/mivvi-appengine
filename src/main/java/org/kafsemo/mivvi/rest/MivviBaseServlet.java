@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.kafsemo.mivvi.app.SeriesData;
 import org.kafsemo.mivvi.appengine.AEMivviDataPopulator;
+import org.kafsemo.mivvi.appengine.EmbeddedMivviDataPopulator;
 import org.kafsemo.mivvi.rdf.Mivvi;
 import org.kafsemo.mivvi.rdf.Presentation;
 import org.kafsemo.mivvi.rdf.RdfUtil;
@@ -68,7 +69,11 @@ public class MivviBaseServlet extends HttpServlet
         MivviDataPopulator populator;
 
         try {
-            populator = new AEMivviDataPopulator();
+            // Billable AppSpot
+//            populator = new AEMivviDataPopulator();
+
+            // Embedded resource
+            populator = new EmbeddedMivviDataPopulator();
             
             MemoryStore ms = new MemoryStore();
             Repository rep = new SailRepository(ms);
