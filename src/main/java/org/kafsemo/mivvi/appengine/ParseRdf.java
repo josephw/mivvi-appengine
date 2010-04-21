@@ -46,6 +46,12 @@ public class ParseRdf extends HttpServlet
             throws ServletException, IOException
     {
         try {
+            resp.setContentType("text/plain");
+            
+            PrintWriter pw = resp.getWriter();
+            
+            pw.println(new Date());
+            
             MemoryStore ms = new MemoryStore();
             
             SailRepository rep = new SailRepository(ms);
@@ -55,10 +61,6 @@ public class ParseRdf extends HttpServlet
             new AEMivviDataPopulator().populate(rep);
 
             RepositoryConnection mviRepCn = rep.getConnection();
-            
-            resp.setContentType("text/plain");
-            
-            PrintWriter pw = resp.getWriter();
             
             pw.println(new Date());
             
