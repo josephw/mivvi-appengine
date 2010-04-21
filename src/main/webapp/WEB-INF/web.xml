@@ -8,6 +8,12 @@
   <description>The base directory for Mivvi data.</description>
 -->
  </context-param>
+ 
+ <context-param>
+  <param-name>publicMivviDataUrl</param-name>
+  <param-value>http://mivvi.net/data/mivvi-data.zip</param-value>
+  <description></description>
+ </context-param>
 
  <servlet>
   <servlet-name>Recognise</servlet-name>
@@ -20,20 +26,25 @@
  </servlet>
 
  <servlet>
+  <servlet-name>Refresh</servlet-name>
+  <servlet-class>org.kafsemo.mivvi.appengine.RefreshDatastoreServlet</servlet-class>
+ </servlet>
+<!-- 
+ <servlet>
   <servlet-name>Upload</servlet-name>
   <servlet-class>org.kafsemo.mivvi.appengine.DataUploadServlet</servlet-class>
  </servlet>
- 
+-->
  <servlet>
   <servlet-name>ParseRdf</servlet-name>
   <servlet-class>org.kafsemo.mivvi.appengine.ParseRdf</servlet-class>
  </servlet>
- 
+ <!--
  <servlet>
   <servlet-name>MivviData</servlet-name>
   <servlet-class>org.kafsemo.mivvi.appengine.MivviDataServlet</servlet-class>
  </servlet>
- 
+ -->
  <servlet-mapping>
   <servlet-name>Recognise</servlet-name>
   <url-pattern>/recognise/*</url-pattern>
@@ -45,22 +56,28 @@
  </servlet-mapping>
 
  <servlet-mapping>
+  <servlet-name>Refresh</servlet-name>
+  <url-pattern>/refresh</url-pattern>
+ </servlet-mapping>
+<!--
+ <servlet-mapping>
   <servlet-name>Upload</servlet-name>
   <url-pattern>/upload</url-pattern>
  </servlet-mapping>
- 
+--> 
  <servlet-mapping>
   <servlet-name>ParseRdf</servlet-name>
   <url-pattern>/parserdf</url-pattern>
  </servlet-mapping>
- 
+<!--
  <servlet-mapping>
   <servlet-name>MivviData</servlet-name>
   <url-pattern>/mivvi-data.zip</url-pattern>
  </servlet-mapping>
- 
+--> 
  <security-constraint>
   <web-resource-collection>
+   <url-pattern>/refresh</url-pattern>
    <url-pattern>/upload</url-pattern>
    <url-pattern>/parserdf</url-pattern>
   </web-resource-collection>

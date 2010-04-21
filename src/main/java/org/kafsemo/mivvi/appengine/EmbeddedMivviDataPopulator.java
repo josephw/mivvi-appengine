@@ -20,6 +20,7 @@ package org.kafsemo.mivvi.appengine;
 
 import java.io.InputStream;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 /**
@@ -28,8 +29,13 @@ import javax.servlet.ServletException;
  * 
  * @author joe
  */
-public class EmbeddedMivviDataPopulator extends AEMivviDataPopulator
+public class EmbeddedMivviDataPopulator extends AEBlobstorePopulator
 {
+    public EmbeddedMivviDataPopulator(ServletContext servletContext) throws ServletException
+    {
+        super(servletContext);
+    }
+    
     @Override
     InputStream getInputStream() throws ServletException
     {

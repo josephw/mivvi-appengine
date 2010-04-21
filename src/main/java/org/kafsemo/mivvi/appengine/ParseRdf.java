@@ -22,11 +22,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.kafsemo.mivvi.rest.MivviDataPopulator;
 import org.openrdf.model.Statement;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
@@ -41,6 +43,17 @@ import org.openrdf.sail.memory.MemoryStore;
  */
 public class ParseRdf extends HttpServlet
 {
+    MivviDataPopulator populator;
+    
+    @Override
+    public void init(ServletConfig config) throws ServletException
+    {
+        super.init(config);
+        populator = new AEDatastorePopulator(config.getServletContext());
+//        populator = new AEMivviDataPopulator();
+//        populator = new EmbeddedMivviDataPopulator();
+    }
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
@@ -58,8 +71,7 @@ public class ParseRdf extends HttpServlet
             
             rep.initialize();
 
-//            new AEMivviDataPopulator().populate(rep);
-            new EmbeddedMivviDataPopulator().populate(rep);
+            populator.populate(rep);
 
             RepositoryConnection mviRepCn = rep.getConnection();
             

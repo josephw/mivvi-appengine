@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 
 import org.kafsemo.mivvi.app.SeriesData;
-import org.kafsemo.mivvi.appengine.AEMivviDataPopulator;
+import org.kafsemo.mivvi.appengine.AEBlobstorePopulator;
+import org.kafsemo.mivvi.appengine.AEDatastorePopulator;
 import org.kafsemo.mivvi.appengine.EmbeddedMivviDataPopulator;
 import org.kafsemo.mivvi.rdf.Mivvi;
 import org.kafsemo.mivvi.rdf.Presentation;
@@ -49,6 +50,7 @@ import org.openrdf.sail.memory.MemoryStore;
  */
 public class MivviBaseServlet extends HttpServlet
 {
+    private MivviDataPopulator populator;
 //    SailRepository rep;
     SeriesData sd;
     Presentation pres;
@@ -57,6 +59,12 @@ public class MivviBaseServlet extends HttpServlet
     public void init(ServletConfig config) throws ServletException
     {
         super.init(config);
+        populator = new AEDatastorePopulator(config.getServletContext());
+        // Billable AppSpot
+//        populator = new AEMivviDataPopulator();
+
+      // Embedded resource
+//        populator = new EmbeddedMivviDataPopulator();
     }
     
     synchronized void populateData() throws ServletException
@@ -66,15 +74,7 @@ public class MivviBaseServlet extends HttpServlet
             return;
         }
             
-        MivviDataPopulator populator;
-
         try {
-            // Billable AppSpot
-//            populator = new AEMivviDataPopulator();
-
-            // Embedded resource
-            populator = new EmbeddedMivviDataPopulator();
-            
             MemoryStore ms = new MemoryStore();
             Repository rep = new SailRepository(ms);
             rep.initialize();

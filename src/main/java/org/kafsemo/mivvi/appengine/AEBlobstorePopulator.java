@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.kafsemo.mivvi.rest.MivviDataPopulator;
@@ -49,9 +50,14 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
  * 
  * @author joe
  */
-public class AEMivviDataPopulator implements MivviDataPopulator
+public class AEBlobstorePopulator implements MivviDataPopulator
 {
-    private final String publicMivviDataUrl = "http://mivvi.net/data/mivvi-data.zip";
+    private final String publicMivviDataUrl;
+    
+    public AEBlobstorePopulator(ServletContext servletContext) throws ServletException
+    {
+        publicMivviDataUrl = servletContext.getInitParameter("publicMivviDataUrl");
+    }
     
     InputStream getInputStream() throws ServletException
     {
