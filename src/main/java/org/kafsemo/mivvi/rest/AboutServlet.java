@@ -25,7 +25,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.kafsemo.mivvi.rdf.Presentation;
 import org.kafsemo.mivvi.rdf.RdfUtil;
 import org.kafsemo.mivvi.rdf.Presentation.Details;
 import org.openrdf.model.Graph;
@@ -36,26 +35,25 @@ import org.openrdf.model.impl.URIImpl;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.rio.RDFHandlerException;
 
+/**
+ * Provides information about a resource.
+ * 
+ * @author joe
+ */
 public class AboutServlet extends MivviBaseServlet
 {
-    Presentation pres;
-    
     @Override
     public void init(ServletConfig config) throws ServletException
     {
         super.init(config);
-        
-        try {
-            pres = new Presentation(rep.getConnection());
-        } catch (RepositoryException e) {
-            throw new ServletException(e);
-        }
     }
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
+        populateData();
+        
         String subject = req.getParameter("subject");
         
         if (subject == null || subject.equals("")) {

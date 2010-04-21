@@ -18,63 +18,68 @@
 
 package org.kafsemo.mivvi.rest;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 
-import org.kafsemo.mivvi.app.FileUtil;
 import org.kafsemo.mivvi.app.SeriesData;
+import org.kafsemo.mivvi.appengine.AEMivviDataPopulator;
 import org.kafsemo.mivvi.rdf.Mivvi;
+import org.kafsemo.mivvi.rdf.Presentation;
 import org.kafsemo.mivvi.rdf.RdfUtil;
 import org.openrdf.model.Graph;
 import org.openrdf.model.Statement;
+import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.sail.SailRepository;
 import org.openrdf.rio.RDFHandlerException;
-import org.openrdf.rio.RDFParseException;
 import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.rio.rdfxml.util.RDFXMLPrettyWriter;
-import org.openrdf.sail.SailException;
 import org.openrdf.sail.memory.MemoryStore;
 
+/**
+ * Base class for servlets that need data available.
+ * 
+ * @author joe
+ */
 public class MivviBaseServlet extends HttpServlet
 {
-    SailRepository rep;
+//    SailRepository rep;
     SeriesData sd;
+    Presentation pres;
 
     @Override
     public void init(ServletConfig config) throws ServletException
     {
         super.init(config);
-        
-        String dataPath = config.getServletContext().getInitParameter("mivviDataPath");
-        
+    }
+    
+    synchronized void populateData() throws ServletException
+    {
+        if (sd != null && pres != null) {
+            /* Data already loaded */
+            return;
+        }
+            
+        MivviDataPopulator populator;
+
         try {
+            populator = new AEMivviDataPopulator();
+            
             MemoryStore ms = new MemoryStore();
-            ms.initialize();
-            rep = new SailRepository(ms);
+            Repository rep = new SailRepository(ms);
+            rep.initialize();
+            
+            populator.populate(rep);
+            
             this.sd = new SeriesData();
             sd.initMviRepository(rep);
-            
-            File base = new File(dataPath);
-            
-            Collection<File> fns = FileUtil.gatherFilenames(base);
-            for (File f : fns) {
-                if (f.getName().endsWith(".rdf")) {
-                    sd.importMivvi(f);
-                }
-            }
-        } catch (SailException e) {
-            throw new ServletException(e);
+            this.pres = new Presentation(rep.getConnection());
         } catch (RepositoryException e) {
-            throw new ServletException(e);
-        } catch (RDFParseException e) {
             throw new ServletException(e);
         } catch (IOException e) {
             throw new ServletException(e);

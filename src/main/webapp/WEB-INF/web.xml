@@ -2,9 +2,11 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
  <context-param>
+<!--
   <param-name>mivviDataPath</param-name>
   <param-value>/home/joe/mivvi/data</param-value>
   <description>The base directory for Mivvi data.</description>
+-->
  </context-param>
 
  <servlet>
@@ -16,6 +18,21 @@
   <servlet-name>About</servlet-name>
   <servlet-class>org.kafsemo.mivvi.rest.AboutServlet</servlet-class>
  </servlet>
+
+ <servlet>
+  <servlet-name>Upload</servlet-name>
+  <servlet-class>org.kafsemo.mivvi.appengine.DataUploadServlet</servlet-class>
+ </servlet>
+ 
+ <servlet>
+  <servlet-name>ParseRdf</servlet-name>
+  <servlet-class>org.kafsemo.mivvi.appengine.ParseRdf</servlet-class>
+ </servlet>
+ 
+ <servlet>
+  <servlet-name>MivviData</servlet-name>
+  <servlet-class>org.kafsemo.mivvi.appengine.MivviDataServlet</servlet-class>
+ </servlet>
  
  <servlet-mapping>
   <servlet-name>Recognise</servlet-name>
@@ -26,4 +43,30 @@
   <servlet-name>About</servlet-name>
   <url-pattern>/about</url-pattern>
  </servlet-mapping>
+
+ <servlet-mapping>
+  <servlet-name>Upload</servlet-name>
+  <url-pattern>/upload</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet-mapping>
+  <servlet-name>ParseRdf</servlet-name>
+  <url-pattern>/parserdf</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet-mapping>
+  <servlet-name>MivviData</servlet-name>
+  <url-pattern>/mivvi-data.zip</url-pattern>
+ </servlet-mapping>
+ 
+ <security-constraint>
+  <web-resource-collection>
+   <url-pattern>/upload</url-pattern>
+   <url-pattern>/parserdf</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+   <role-name>admin</role-name>
+  </auth-constraint>
+ </security-constraint>
+
 </web-app>
