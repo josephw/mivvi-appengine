@@ -1,9 +1,9 @@
 Dependencies:
 
-mvn install:install-file -Dfile=lib/user/appengine-api-1.0-sdk-1.3.2.jar -DgroupId=com.google -DartifactId=appengine-api-1.0-sdk -Dversion=1.3.2 -DgeneratePom=true -Dpackaging=jar
+mvn install:install-file -Dfile=lib/user/appengine-api-1.0-sdk-1.3.2.jar -DgroupId=com.google.appengine -DartifactId=appengine-api-1.0-sdk -Dversion=1.3.2 -DgeneratePom=true -Dpackaging=jar
 
 'mvn install' the main mivvi project before building.
 
-Before deployment:
+After deployment:
 
-cp -p /home/joe/mivvi/data/mivvi-data.zip WEB-INF/classes/org/kafsemo/mivvi/appengine/
+Get /refresh
