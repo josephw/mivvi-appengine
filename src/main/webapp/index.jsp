@@ -29,5 +29,12 @@ Give the URI.</p>
 </p>
 <p>e.g. to ask about <code>&lt;http://www.example.com/1/1#&gt;</code>:</p>
 <pre><%= base %>about?subject=http%3A%2F%2Fwww.example.com%2F1%2F1%23</pre>
+
+<h2>series</h2>
+<h3><code><%= base %>series</code></h3>
+<p>Provides a list of all known series along with their titles
+and alternative descriptions.<p>
+<p><a href='series'>All known series.</a></p>
+
 </body>
 </html>

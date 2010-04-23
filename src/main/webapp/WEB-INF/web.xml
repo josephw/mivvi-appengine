@@ -26,6 +26,11 @@
  </servlet>
 
  <servlet>
+  <servlet-name>Series</servlet-name>
+  <servlet-class>org.kafsemo.mivvi.rest.SeriesServlet</servlet-class>
+ </servlet>
+ 
+ <servlet>
   <servlet-name>Refresh</servlet-name>
   <servlet-class>org.kafsemo.mivvi.appengine.RefreshDatastoreServlet</servlet-class>
  </servlet>
@@ -53,6 +58,11 @@
  <servlet-mapping>
   <servlet-name>About</servlet-name>
   <url-pattern>/about</url-pattern>
+ </servlet-mapping>
+
+ <servlet-mapping>
+  <servlet-name>Series</servlet-name>
+  <url-pattern>/series</url-pattern>
  </servlet-mapping>
 
  <servlet-mapping>
