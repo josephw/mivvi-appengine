@@ -64,7 +64,7 @@ public class MivviBaseServlet extends HttpServlet
 //        populator = new AEMivviDataPopulator();
 
       // Embedded resource
-//        populator = new EmbeddedMivviDataPopulator();
+//        populator = new EmbeddedMivviDataPopulator(config.getServletContext());
     }
     
     synchronized void populateData() throws ServletException
